@@ -8,11 +8,6 @@ promptUser => {
     return inquirer.prompt([
       {
         type: "input",
-        name: "github",
-        message: "What is your GitHub username?"
-      },
-      {
-        type: "input",
         name: "name",
         message: "What is your project's name?"
       },
@@ -34,12 +29,17 @@ promptUser => {
       {
         type: "input",
         name: "usage",
-        message: "How would you describe your project?"
+        message: "What is your project used for?"
       },
       {
         type: "input",
-        name: "liscence",
-        message: "How would you describe your project?"
+        name: "licence",
+        message: "What is your user license?"
+      },
+      {
+        type: "input",
+        name: "github",
+        message: "What is your GitHub username?"
       },
       {
         type: "input",
@@ -68,16 +68,25 @@ promptUser => {
     ## Installation
 
     ...
-
+    npm inquirer/
+    npm axios/
     ...
 
     ## Usage 
+    ${answers.usage}
 
     ## License
+    ${answers.license}
     
     ## Contributing
 
     ## Tests
+
+    In order to run tests, input the following command:
+
+    ...
+    npm test
+    ...
 
     ## Questions
 

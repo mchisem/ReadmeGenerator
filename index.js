@@ -2,39 +2,101 @@ const fs = require("fs");
 const axios = require("axios");
 const inquirer = require("inquirer");
 
-inquirer
-  .prompt({
-    message: "Enter your GitHub username",
-    name: "username"
-  })
-  .then(function({ username }) {
-    const queryUrl = `https://api.github.com/users/${username}/repos?per_page=100`;
+const writeFileAsync = util.promisify(fs.writeFile);
 
-
-    axios.get(queryUrl)
-    .then(function (response) {
-      //map will always return an array//
-      const repoNames = response.data.map(function(repo){
-        return repo.name;
-      });
-      console.log(response);
-
-      //slash n means new line//
-      const repoNamesStr = repoNames.join("\n");
-
-      fs.writeFile("repos.txt", repoNamesStr, function(err){
-        if(err) {
-          throw err;
-        }
-      });
-    })
+promptUser => {
+    return inquirer.prompt([
+      {
+        type: "input",
+        name: "github",
+        message: "What is your GitHub username?"
+      },
+      {
+        type: "input",
+        name: "name",
+        message: "What is your project's name?"
+      },
+      {
+        type: "input",
+        name: "description",
+        message: "How would you describe your project?"
+      },
+      {
+        type: "input",
+        name: "table",
+        message: "How would you describe your project?"
+      },
+      {
+        type: "input",
+        name: "installation",
+        message: "How would you describe your project?"
+      },
+      {
+        type: "input",
+        name: "usage",
+        message: "How would you describe your project?"
+      },
+      {
+        type: "input",
+        name: "liscence",
+        message: "How would you describe your project?"
+      },
+      {
+        type: "input",
+        name: "email",
+        message: "What is your GitHub user email?"
+      }
+    ]);
+  }
   
-    .catch(function (error) {
-      // handle error
-      console.log(error);
+  function generateREADME(answers) {
+    return ` 
+    # Project Name	
+    ${answers.name}
+
+    ## Description
+    ${answers.description}
+
+    ## Table of Contents	
+    * [Installation](#installation)
+    * [Usage](#usage)
+    * [License](#license)
+    * [Contributing](#contributing)
+    * [Tests](#tests)
+    * [Questions](#questions)
+
+    ## Installation
+
+    ...
+
+    ...
+
+    ## Usage 
+
+    ## License
+    
+    ## Contributing
+
+    ## Tests
+
+    ## Questions
+
+    ## GitHub Username
+    ${answers.github}
+
+    `;
+  }
+  
+  promptUser()
+    .then(function(answers) {
+      const md = generateREADME(answers);
+  
+      return writeFileAsync("README.md", md);
     })
-    .finally(function () {
-      // always executed
+    .then(function() {
+      console.log("You did it!");
+    })
+    .catch(function(err) {
+      console.log(err);
     });
   
-  });

@@ -1,0 +1,22 @@
+{
+  "name": "readmegenerator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "Hello"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mchisem/ReadmeGenerator.git"
+  },
+  "author": "Maya Chisem",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mchisem/ReadmeGenerator/issues"
+  },
+  "homepage": "https://github.com/mchisem/ReadmeGenerator#readme",
+  "dependencies": {
+    "axios": "^0.19.2"
+  }
+}

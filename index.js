@@ -8,6 +8,11 @@ promptUser => {
     return inquirer.prompt([
       {
         type: "input",
+        name: "github",
+        message: "What is your GitHub username?"
+      },
+      {
+        type: "input",
         name: "name",
         message: "What is your project's name?"
       },
@@ -18,43 +23,44 @@ promptUser => {
       },
       {
         type: "input",
-        name: "table",
-        message: "How would you describe your project?"
+        name: "license",
+        message: "What license should your project have?"
       },
       {
         type: "input",
         name: "installation",
-        message: "How would you describe your project?"
+        message: "What command should be installed to run dependencies?"
+      },
+      {
+        type: "input",
+        name: "test",
+        message: "What command runs tests?"
       },
       {
         type: "input",
         name: "usage",
-        message: "What is your project used for?"
+        message: "What does the user need to know about using the repo?"
       },
       {
         type: "input",
-        name: "licence",
-        message: "What is your user license?"
-      },
-      {
-        type: "input",
-        name: "github",
-        message: "What is your GitHub username?"
-      },
-      {
-        type: "input",
-        name: "email",
-        message: "What is your GitHub user email?"
+        name: "contributing",
+        message: "What does the user need to know about adding to the repo?"
       }
     ]);
   }
   
   function generateREADME(answers) {
     return ` 
+    ## GitHub Username
+    
+    ${answers.github}
+
     # Project Name	
+
     ${answers.name}
 
     ## Description
+
     ${answers.description}
 
     ## Table of Contents	
@@ -68,30 +74,30 @@ promptUser => {
     ## Installation
 
     ...
-    npm inquirer/
-    npm axios/
+    ${answers.installation}
     ...
 
     ## Usage 
+
     ${answers.usage}
 
     ## License
+
     ${answers.license}
     
     ## Contributing
+
+    ${answers.contributing}
 
     ## Tests
 
     In order to run tests, input the following command:
 
     ...
-    npm test
+    ${answers.test}
     ...
 
     ## Questions
-
-    ## GitHub Username
-    ${answers.github}
 
     `;
   }

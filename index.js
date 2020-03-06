@@ -8,7 +8,7 @@ promptUser => {
     return inquirer.prompt([
       {
         type: "input",
-        name: "github",
+        name: "username",
         message: "What is your GitHub username?"
       },
       {
@@ -103,15 +103,34 @@ promptUser => {
   }
   
   promptUser()
-    .then(function(answers) {
+    .then(function({ username }) {
+    const queryUrl = `https://api.github.com/users/${username}/repos?per_page=100`;
+
+
+    axios.get(queryUrl)
+      .then(function (response) {
       const md = generateREADME(answers);
   
       return writeFileAsync("README.md", md);
+      });
+      console.log(response);
+
+      //slash n means new line//
+      const repoNamesStr = repoNames.join("\n");
+
+      fs.writeFile("README.md", repoNamesStr, function(err){
+        if(err) {
+          throw err;
+        }
+      });
     })
-    .then(function() {
-      console.log("You did it!");
+    
+    .catch(function (error) {
+      // handle error
+      console.log(error);
     })
-    .catch(function(err) {
-      console.log(err);
+    .finally(function () {
+      // always executed
     });
-  
+  ;
+

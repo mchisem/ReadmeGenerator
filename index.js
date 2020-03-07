@@ -1,9 +1,9 @@
 const fs = require("fs");
 const axios = require("axios");
 const inquirer = require("inquirer");
-// const util = require("util");
+const util = require("util");
 
-// const writeFileAsync = util.promisify(fs.writeFile);
+const writeFileAsync = util.promisify(fs.writeFile);
 
 inquirer
   .prompt([
@@ -80,59 +80,74 @@ inquirer
   
   });
 
-//   function generateREADME(answers) {
-//     return ` 
-//     ## GitHub Username
+  // function generateREADME(answers) {
+  //   return ` 
+  //   ## GitHub Username
     
-//     ${answers.github}
+  //   ${answers.github}
 
-//     # Project Name	
+  //   # Project Name	
 
-//     ${answers.name}
+  //   ${answers.name}
 
-//     ## Description
+  //   ## Description
 
-//     ${answers.description}
+  //   ${answers.description}
 
-//     ## Table of Contents	
-//     * [Installation](#installation)
-//     * [Usage](#usage)
-//     * [License](#license)
-//     * [Contributing](#contributing)
-//     * [Tests](#tests)
-//     * [Questions](#questions)
+  //   ## Table of Contents	
+  //   * [Installation](#installation)
+  //   * [Usage](#usage)
+  //   * [License](#license)
+  //   * [Contributing](#contributing)
+  //   * [Tests](#tests)
+  //   * [Questions](#questions)
 
-//     ## Installation
+  //   ## Installation
 
-//     ...
-//     ${answers.installation}
-//     ...
+  //   ...
+  //   ${answers.installation}
+  //   ...
 
-//     ## Usage 
+  //   ## Usage 
 
-//     ${answers.usage}
+  //   ${answers.usage}
 
-//     ## License
+  //   ## License
 
-//     ${answers.license}
+  //   ${answers.license}
     
-//     ## Contributing
+  //   ## Contributing
 
-//     ${answers.contributing}
+  //   ${answers.contributing}
 
-//     ## Tests
+  //   ## Tests
 
-//     In order to run tests, input the following command:
+  //   In order to run tests, input the following command:
 
-//     ...
-//     ${answers.test}
-//     ...
+  //   ...
+  //   ${answers.test}
+  //   ...
 
-//     ## Questions
-
-//     `;
-//   }
+  //   ## Questions`;
+  // }
   
+  // async function init() {
+  //   // console.log("hi")
+  //   try {
+  //     const answers = await promptUser();
+  
+  //     const md = generateREADME(answers);
+  
+  //     await writeFileAsync("README.md", md);
+  
+  //     console.log("Successfully wrote to README.md");
+  //   } catch(err) {
+  //     console.log(err);
+  //   }
+  // }
+  
+  // init();
+    
 //   promptUser()
 //     .then(function({ username }) {
 //     const queryUrl = `https://api.github.com/users/${username}/repos?per_page=100`;

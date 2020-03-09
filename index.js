@@ -2,7 +2,6 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 const axios = require("axios");
 
-
 inquirer
 .prompt([
     {
@@ -119,20 +118,3 @@ fs.writeFile("README.md", generate, function(){
 })
 }); 
 })
-
-
-// async function init() {
-//   try {
-//     const answers = await prompt();
-
-//     const md = generateMD(answers);
-
-//     await writeFileAsync("README.md", md);
-
-//     console.log("Successfully wrote to readme!");
-//   } catch(err) {
-//     console.log("error");
-//   }
-// }
-
-// init();

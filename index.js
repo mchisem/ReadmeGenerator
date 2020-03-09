@@ -1,185 +1,140 @@
-const fs = require("fs");
-const axios = require("axios");
 const inquirer = require("inquirer");
-const util = require("util");
+const fs = require("fs");
+// const util = require("util");
+const axios = require("axios");
 
-const writeFileAsync = util.promisify(fs.writeFile);
+// const writeFileAsync = util.promisify(fs.writeFile);
 
 inquirer
-  .prompt([
+.prompt([
     {
-      type: "input",
-      name: "username",
-      message: "Enter your GitHub username"
-    },
+        type: "input",
+        name: "question",
+        message: "What's your name?"
+      },
     {
-      type: "input",
-      name: "name",
-      message: "What is your project's name?"
-    },
-    {
-      type: "input",
-      name: "description",
-      message: "How would you describe your project?"
-    },
-    {
-      type: "input",
-      name: "license",
-      message: "What license should your project have?"
-    },
-    {
-      type: "input",
-      name: "installation",
-      message: "What command should be installed to run dependencies?"
-    },
-    {
-      type: "input",
-      name: "test",
-      message: "What command runs tests?"
-    },
-    {
-      type: "input",
-      name: "usage",
-      message: "What does the user need to know about using the repo?"
-    },
-    {
-      type: "input",
-      name: "contributing",
-      message: "What does the user need to know about adding to the repo?"
-    }
+        type: "input",
+        name: "username",
+        message: "Enter your GitHub username"
+      },
+      {
+        type: "input",
+        name: "name",
+        message: "What is your project's name?"
+      },
+      {
+        type: "input",
+        name: "description",
+        message: "How would you describe your project?"
+      },
+      {
+        type: "input",
+        name: "license",
+        message: "What license should your project have?"
+      },
+      {
+        type: "input",
+        name: "installation",
+        message: "What command should be installed to run dependencies?"
+      },
+      {
+        type: "input",
+        name: "test",
+        message: "What command runs tests?"
+      },
+      {
+        type: "input",
+        name: "usage",
+        message: "What mehtods did you use to make this README?"
+      },
+      {
+        type: "input",
+        name: "contributing",
+        message: "Who contributed to this README?"
+      }
   ])
-  .then(function({ username }) {
-    const queryUrl = `https://api.github.com/users/${username}/repos?per_page=100`;
+
+.then (function(answers) {
+
+const queryURL = `https://api.github.com/users/${answers.username}`;
+
+axios.get(queryURL).then(function() { 
+
+const generate = `
+## GitHub Username
+
+${answers.username}
+
+# Project Name	
+
+${answers.name}
+
+## Description
+
+${answers.description}
+
+## Table of Contents
+
+* [Installation](#installation)
+* [Usage](#usage)
+* [License](#license)
+* [Contributing](#contributing)
+* [Tests](#tests)
+* [Questions](#questions)
+
+## Installation
+
+...
+${answers.installation}
+...
+
+## Usage 
+
+${answers.usage}
+
+## License
+
+${answers.license}
+
+## Contributing
+
+${answers.contributing}
+
+## Tests
+
+In order to run tests, input the following command:
+
+...
+${answers.test}
+...
+
+## Questions
+
+<img src="https://avatars0.githubusercontent.com/u/58449282?v=4&v=4"
+alt="avatar" style= "width: 40px"/>
+
+Questions? Feel free to google some answers! Or contact me at ${answers.username}.
+`;
+
+fs.writeFile("README.md", generate, function(){
+    console.log("Congrats! You made a README!");
+})
+}); 
+})
 
 
-    axios.get(queryUrl)
-    .then(function (response) {
-      //map will always return an array//
-      const repoNames = response.data.map(function(repo){
-        return repo.name;
-      });
-      console.log(response);
+// async function init() {
+//   try {
+//     const answers = await prompt();
 
-      //slash n means new line//
-      const repoNamesStr = repoNames.join("\n");
+//     const md = generateMD(answers);
 
-      fs.writeFile("repos.txt", repoNamesStr, function(err){
-        if(err) {
-          throw err;
-        }
-      });
-    })
-  
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-    .finally(function () {
-      // always executed
-    });
-  
-  });
+//     await writeFileAsync("README.md", md);
 
-  // function generateREADME(answers) {
-  //   return ` 
-  //   ## GitHub Username
-    
-  //   ${answers.github}
+//     console.log("Successfully wrote to readme!");
+//   } catch(err) {
+//     console.log("error");
+//   }
+// }
 
-  //   # Project Name	
-
-  //   ${answers.name}
-
-  //   ## Description
-
-  //   ${answers.description}
-
-  //   ## Table of Contents	
-  //   * [Installation](#installation)
-  //   * [Usage](#usage)
-  //   * [License](#license)
-  //   * [Contributing](#contributing)
-  //   * [Tests](#tests)
-  //   * [Questions](#questions)
-
-  //   ## Installation
-
-  //   ...
-  //   ${answers.installation}
-  //   ...
-
-  //   ## Usage 
-
-  //   ${answers.usage}
-
-  //   ## License
-
-  //   ${answers.license}
-    
-  //   ## Contributing
-
-  //   ${answers.contributing}
-
-  //   ## Tests
-
-  //   In order to run tests, input the following command:
-
-  //   ...
-  //   ${answers.test}
-  //   ...
-
-  //   ## Questions`;
-  // }
-  
-  // async function init() {
-  //   // console.log("hi")
-  //   try {
-  //     const answers = await promptUser();
-  
-  //     const md = generateREADME(answers);
-  
-  //     await writeFileAsync("README.md", md);
-  
-  //     console.log("Successfully wrote to README.md");
-  //   } catch(err) {
-  //     console.log(err);
-  //   }
-  // }
-  
-  // init();
-    
-//   promptUser()
-//     .then(function({ username }) {
-//     const queryUrl = `https://api.github.com/users/${username}/repos?per_page=100`;
-
-
-//     axios.get(queryUrl)
-//       .then(function (response) {
-//       const md = generateREADME(answers);
-  
-//       return writeFileAsync("README.md", md);
-
-//       console.log(response);
-//       });
-
-//       console.log(response);
-  
-//       //slash n means new line//
-//       const repoNamesStr = repoNames.join("\n");
-
-//       fs.writeFile("README.md", repoNamesStr, function(err){
-//         if(err) {
-//           throw err;
-//         }
-//       });
-//     })
-    
-//     .catch(function (error) {
-//       // handle error
-//       console.log(error);
-//     })
-//     .finally(function () {
-//       // always executed
-//     });
-//   ;
-
+// init();

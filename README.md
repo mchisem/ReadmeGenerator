@@ -5,11 +5,11 @@ mchisem
 
 # Project Name	
 
-Readme Generator
+ReadmeGenerator
 
 ## Description
 
-This project creats a Readme file.
+Creates a Readme file
 
 ## Table of Contents
 
@@ -43,7 +43,7 @@ Maya Chisem
 In order to run tests, input the following command:
 
 ...
-npm tes
+npm test
 ...
 
 ## Questions
